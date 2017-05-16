@@ -1,0 +1,28 @@
+{
+    "name": "onex/espier-rpccall",
+    "description": "A  API caller Package for Shopex espier",
+    "keywords": ["restful", "api", "lumen", "rpccall"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "lujunyi",
+            "email": "lujunyi@shopex.cn"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/lumen-framework": "5.4.*",
+        "shopex/teegon": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Espier\\Rpccall\\": "src"
+        }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:shopex/teegon-open-php-sdk.git"
+        }
+    ]
+}
