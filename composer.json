@@ -18,11 +18,5 @@
         "psr-4": {
             "Espier\\Rpccall\\": "src"
         }
-    },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:shopex/teegon-open-php-sdk.git"
-        }
-    ]
+    }
 }
