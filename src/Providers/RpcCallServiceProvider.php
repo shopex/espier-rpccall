@@ -22,6 +22,8 @@ class RpcCallServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //加载config
+        $this->mergeConfigFrom(realpath(__DIR__.'/../config/rpccall.php'), 'rpccall');
         $this->app->singleton('rpccall', function () {
             return new Rpccall(new Teegon());
         });
