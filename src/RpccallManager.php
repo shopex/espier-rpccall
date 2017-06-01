@@ -18,14 +18,14 @@ class RpccallManager implements FactoryContract
     protected $app;
 
     /**
-     * The array of resolved cache stores.
+     * The array of resolved rpcclient stores.
      *
      * @var array
      */
     protected $stores = [];
 
     /**
-     * Create a new Cache manager instance.
+     * Create a new rpcclient manager instance.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
@@ -36,7 +36,7 @@ class RpccallManager implements FactoryContract
     }
 
     /**
-     * Get a cache store instance by name.
+     * Get a rpcclient store instance by name.
      *
      * @param  string|null  $name
      * @return mixed
@@ -49,7 +49,7 @@ class RpccallManager implements FactoryContract
     }
 
     /**
-     * Get a cache driver instance.
+     * Get a rpcclient driver instance.
      *
      * @param  string  $driver
      * @return mixed
@@ -60,10 +60,10 @@ class RpccallManager implements FactoryContract
     }
 
     /**
-     * Attempt to get the store from the local cache.
+     * Attempt to get the store from the local rpcclient.
      *
      * @param  string  $name
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return object
      */
     protected function get($name)
     {
@@ -74,7 +74,7 @@ class RpccallManager implements FactoryContract
      * Resolve the given store.
      *
      * @param  string  $name
-     * @return \Illuminate\Contracts\Cache\Repository
+     * @return object
      *
      * @throws \InvalidArgumentException
      */
@@ -90,26 +90,23 @@ class RpccallManager implements FactoryContract
         if (method_exists($this, $driverMethod)) {
             return $this->{$driverMethod}($config);
         } else {
-            throw new InvalidArgumentException("Driver [{$config['driver']}] is not supported.");
+            throw new InvalidArgumentException("Rpcclient Driver [{$config['driver']}] is not supported.");
         }
     }
 
     /**
-     * Create an instance of the Redis cache driver.
+     * Create an instance of the Redis rpcclient driver.
      *
      * @param  array  $config
-     * @return \Illuminate\Cache\RedisStore
+     * @return teegonstore objecjt instance
      */
     protected function createTeegonDriver(array $config)
     {
-        echo "<pre>1";print_r(Arr::get($config, 'servers','0'));exit;
-        $connection = Arr::get($config, 'default');
-
-        return new TeegonStore($connection);
+        return new TeegonStore($config);
     }
 
     /**
-     * Get the cache connection configuration.
+     * Get the rpcclient connection configuration.
      *
      * @param  string  $name
      * @return array
@@ -120,7 +117,7 @@ class RpccallManager implements FactoryContract
     }
 
     /**
-     * Get the default cache driver name.
+     * Get the default rpcclient driver name.
      *
      * @return string
      */
@@ -130,7 +127,7 @@ class RpccallManager implements FactoryContract
     }
 
     /**
-     * Set the default cache driver name.
+     * Set the default rpcclient driver name.
      *
      * @param  string  $name
      * @return void

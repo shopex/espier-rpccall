@@ -3,17 +3,20 @@
 namespace Espier\Rpccall\Servers;
 
 use Espier\Rpccall\Repinterface\Repository;
-
-include __DIR__ . "/../../../../shopex/teegon/src/TeegonClient.php";
-use TeegonClient;
+use Shopex\TeegonClient\TeegonClient;
 
 class TeegonStore implements Repository
 {
+    /**
+     * teegonclient config.
+     *
+     * @var array
+     */
+    public $config;
 
-    public function __construct($connection)
+    public function __construct($config)
     {
-        var_dump($connection);exit;
-        $this->connection = $connection;
+        $this->config = $config;
     }
 
     public function get($uri, array $parameters = [], array $headers = [])
@@ -54,17 +57,15 @@ class TeegonStore implements Repository
      *
      * @return mixed5
      */
-    protected static function createRequest($verb, $uri, $parameters, $headers)
+    protected function createRequest($verb, $uri, $parameters, $headers)
     {
         $verb   = strtolower($verb);
-        $url    = 'http://api.teegon.com/router';
-        // $url    = 'http://127.0.0.1/espier/public/index.php/api/test2';
-        $key    = '47b7QcS';
-        $secret = 'ZmXxR5PXXEz8mjCwary4';
+        $url    = $this->config['url'];
+        $key    = $this->config['key'];
+        $secret = $this->config['secret'];
 
         // 发起请求
         $client = new TeegonClient($url, $key, $secret);
-        // echo "<pre>";print_r($uri);exit;
         return $client->$verb($uri, $parameters, $headers);
     }
 }

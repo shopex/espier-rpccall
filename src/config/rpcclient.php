@@ -31,13 +31,10 @@ return [
     'stores' => [
         'teegon' => [
             'driver' => 'teegon',
-            'servers' => [
-                [
-                    'url' => env('TEEGON_URL', 'http://api.teegon.com/router'),
-                    'key' => env('TEEGON_KEY', '47b7QcS'),
-                    'secret' => env('TEEGON_SECRET', 'ZmXxR5PXXEz8mjCwary4'),
-                ],
-            ],
+            // 'url' => env('TEEGON_URL', 'http://api.teegon.com/router'),
+            'url' => 'http://127.0.0.1/espier/public/index.php/api/operators',
+            'key' => env('TEEGON_KEY', '47b7QcS'),
+            'secret' => env('TEEGON_SECRET', 'ZmXxR5PXXEz8mjCwary4'),
         ],
     ],
 
