@@ -2,8 +2,9 @@
 namespace Espier\Rpccall\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Espier\Rpccall\Rpccall;
-use Espier\Rpccall\Servers\Teegon;
+// use Espier\Rpccall\Rpccall;
+// use Espier\Rpccall\Servers\Teegon;
+use Espier\Rpccall\RpccallManager;
 
 class RpcCallServiceProvider extends ServiceProvider
 {
@@ -23,14 +24,13 @@ class RpcCallServiceProvider extends ServiceProvider
     public function register()
     {
         //加载config
-        $this->mergeConfigFrom(realpath(__DIR__.'/../config/rpccall.php'), 'rpccall');
-        $this->app->singleton('rpccall', function () {
-            return new Rpccall(new Teegon());
-        });
-        // $this->app->bind('rpccall', 'Espier\Rpccall\Rpccall');
-
-        // $this->app->bind('Rpccall',function(){
-        //     return new Rpccall();
+        $this->mergeConfigFrom(realpath(__DIR__.'/../config/rpcclient.php'), 'rpcclient');
+        
+        // $this->app->singleton('rpccall', function () {
+        //     return new Rpccall(new Teegon());
         // });
+        $this->app->singleton('rpccall', function ($app) {
+            return new RpccallManager($app);
+        });
     }
 }

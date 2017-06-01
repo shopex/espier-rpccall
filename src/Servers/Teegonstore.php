@@ -7,11 +7,12 @@ use Espier\Rpccall\Repinterface\Repository;
 include __DIR__ . "/../../../../shopex/teegon/src/TeegonClient.php";
 use TeegonClient;
 
-class Teegon implements Repository
+class TeegonStore implements Repository
 {
 
     public function __construct($connection)
     {
+        var_dump($connection);exit;
         $this->connection = $connection;
     }
 
