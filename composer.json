@@ -1,7 +1,7 @@
 {
     "name": "onex/espier-rpccall",
-    "description": "A  API caller Package for Shopex espier",
-    "keywords": ["restful", "api", "lumen", "rpccall"],
+    "description": "A remote API caller Package for Shopex espier",
+    "keywords": ["restful", "api", "lumen", "rpccall client"],
     "license": "BSD-3-Clause",
     "authors": [
         {
