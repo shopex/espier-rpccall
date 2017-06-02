@@ -4,6 +4,7 @@ namespace Espier\Rpccall\Servers;
 
 use Espier\Rpccall\Repinterface\Repository;
 use Shopex\TeegonClient\TeegonClient;
+use InvalidArgumentException;
 
 class TeegonStore implements Repository
 {
@@ -68,6 +69,10 @@ class TeegonStore implements Repository
     protected function createRequest($verb, $uri, $parameters, $headers)
     {
         $verb    = strtolower($verb);
+        if (!$this->config['url'] || !$this->config['key'] || !$this->config['secret']) {
+            throw new InvalidArgumentException("TeegonClient paramss url,or key,or secret is not defined.");
+        }
+
         $url     = $this->config['url'];
         $key     = $this->config['key'];
         $secret  = $this->config['secret'];
