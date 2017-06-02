@@ -25,6 +25,62 @@ class RpccallManager implements FactoryContract
     protected $stores = [];
 
     /**
+     * Version for the request.
+     *
+     * @var string
+     */
+    protected $version;
+
+    /**
+     * Domain for the request.
+     *
+     * @var string
+     */
+    protected $domain;
+
+    /**
+     * API subtype.
+     *
+     * @var string
+     */
+    protected $subtype;
+
+    /**
+     * API standards tree.
+     *
+     * @var string
+     */
+    protected $standardsTree;
+
+    /**
+     * API prefix.
+     *
+     * @var string
+     */
+    protected $prefix;
+
+    /**
+     * Default version.
+     *
+     * @var string
+     */
+    protected $defaultVersion;
+
+    /**
+     * Default domain.
+     *
+     * @var string
+     */
+    protected $defaultDomain;
+
+    /**
+     * Default format.
+     *
+     * @var string
+     */
+    protected $defaultFormat;
+
+    /**
      * Create a new rpcclient manager instance.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -86,9 +142,9 @@ class RpccallManager implements FactoryContract
         }
 
         $driverMethod = 'create'.ucfirst($config['driver']).'Driver';
-
+        $defaultHeader = ['host'=>$this->getDomain(),'accept'=>$this->getAcceptHeader()];
         if (method_exists($this, $driverMethod)) {
-            return $this->{$driverMethod}($config);
+            return $this->{$driverMethod}($config, $defaultHeader);
         } else {
             throw new InvalidArgumentException("Rpcclient Driver [{$config['driver']}] is not supported.");
         }
@@ -100,9 +156,9 @@ class RpccallManager implements FactoryContract
      * @param  array  $config
      * @return teegonstore objecjt instance
      */
-    protected function createTeegonDriver(array $config)
+    protected function createTeegonDriver(array $config, array $defaultHeader)
     {
-        return new TeegonStore($config);
+        return new TeegonStore($config, $defaultHeader);
     }
 
     /**
@@ -135,6 +191,152 @@ class RpccallManager implements FactoryContract
     public function setDefaultDriver($name)
     {
         $this->app['config']['rpcclient.default'] = $name;
+    }
+
+    /**
+     * Set the version of the API for the next request.
+     *
+     * @param string $version
+     *
+     * @return string
+     */
+    public function version($version)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * Build the "Accept" header.
+     *
+     * @return string
+     */
+    protected function getAcceptHeader()
+    {
+        return sprintf('application/%s.%s.%s+%s', $this->getStandardsTree(), $this->getSubtype(), $this->getVersion(), $this->getFormat());
+    }
+
+    /**
+     * Get the domain.
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->domain ?: $this->defaultDomain;
+    }
+
+    /**
+     * Get the version.
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version ?: $this->defaultVersion;
+    }
+
+    /**
+     * Get the format.
+     *
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->defaultFormat;
+    }
+
+    /**
+     * Get the subtype.
+     *
+     * @return string
+     */
+    public function getSubtype()
+    {
+        return $this->subtype;
+    }
+
+    /**
+     * Set the subtype.
+     *
+     * @param string $subtype
+     *
+     * @return void
+     */
+    public function setSubtype($subtype)
+    {
+        $this->subtype = $subtype;
+    }
+
+    /**
+     * Get the standards tree.
+     *
+     * @return string
+     */
+    public function getStandardsTree()
+    {
+        return $this->standardsTree;
+    }
+
+    /**
+     * Set the standards tree.
+     *
+     * @param string $standardsTree
+     *
+     * @return void
+     */
+    public function setStandardsTree($standardsTree)
+    {
+        $this->standardsTree = $standardsTree;
+    }
+
+    /**
+     * Set the prefix.
+     *
+     * @param string $prefix
+     *
+     * @return void
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
+     * Set the default version.
+     *
+     * @param string $version
+     *
+     * @return void
+     */
+    public function setDefaultVersion($version)
+    {
+        $this->defaultVersion = $version;
+    }
+
+    /**
+     * Set the default domain.
+     *
+     * @param string $domain
+     *
+     * @return void
+     */
+    public function setDefaultDomain($domain)
+    {
+        $this->defaultDomain = $domain;
+    }
+
+    /**
+     * Set the defult format.
+     *
+     * @param string $format
+     *
+     * @return void
+     */
+    public function setDefaultFormat($format)
+    {
+        $this->defaultFormat = $format;
     }
 
     /**

@@ -14,9 +14,17 @@ class TeegonStore implements Repository
      */
     public $config;
 
-    public function __construct($config)
+    /**
+     * default header.
+     *
+     * @var array
+     */
+    public $defaultHeader;
+
+    public function __construct($config, $defaultHeader)
     {
         $this->config = $config;
+        $this->defaultHeader = $defaultHeader;
     }
 
     public function get($uri, array $parameters = [], array $headers = [])
@@ -59,13 +67,14 @@ class TeegonStore implements Repository
      */
     protected function createRequest($verb, $uri, $parameters, $headers)
     {
-        $verb   = strtolower($verb);
-        $url    = $this->config['url'];
-        $key    = $this->config['key'];
-        $secret = $this->config['secret'];
+        $verb    = strtolower($verb);
+        $url     = $this->config['url'];
+        $key     = $this->config['key'];
+        $secret  = $this->config['secret'];
+        $headers = array_merge($this->defaultHeader, $headers);
 
         // 发起请求
-        $client = new TeegonClient($url, $key, $secret);
+        $client = new TeegonClient($url, $key, $secret, true);
         return $client->$verb($uri, $parameters, $headers);
     }
 }

@@ -25,12 +25,18 @@ class RpcCallServiceProvider extends ServiceProvider
     {
         //加载config
         $this->mergeConfigFrom(realpath(__DIR__.'/../config/rpcclient.php'), 'rpcclient');
-        
-        // $this->app->singleton('rpccall', function () {
-        //     return new Rpccall(new Teegon());
-        // });
+
         $this->app->singleton('rpccall', function ($app) {
-            return new RpccallManager($app);
+            $manager = new RpccallManager($app);
+
+            $manager->setSubtype($this->app['config']['api.subtype']);
+            $manager->setStandardsTree($this->app['config']['api.standardsTree']);
+            // $manager->setPrefix($this->app['config']['api.prefix']);
+            $manager->setDefaultVersion($this->app['config']['api.version']);
+            $manager->setDefaultDomain($this->app['config']['api.domain']);
+            $manager->setDefaultFormat($this->app['config']['api.defaultFormat']);
+
+            return $manager;
         });
     }
 }
