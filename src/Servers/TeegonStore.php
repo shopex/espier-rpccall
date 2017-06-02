@@ -1,5 +1,4 @@
 <?php
-
 namespace Espier\Rpccall\Servers;
 
 use Espier\Rpccall\Repinterface\Repository;
