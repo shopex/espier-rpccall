@@ -76,9 +76,12 @@ class TeegonStore implements Repository
         $key     = $this->config['key'];
         $secret  = $this->config['secret'];
         $headers = array_merge($this->defaultHeader, $headers);
+        // 去除空值
+        $headers = array_filter($headers);
+
 
         // 发起请求
-        $client = new TeegonClient($url, $key, $secret, true);
+        $client = new TeegonClient($url, $key, $secret);
         return $client->$verb($uri, $parameters, $headers);
     }
 }
