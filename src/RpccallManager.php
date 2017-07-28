@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use Espier\Rpccall\Contracts\Store;
 use Espier\Rpccall\Contracts\Factory as FactoryContract;
 use Espier\Rpccall\Servers\TeegonStore;
+use Espier\Rpccall\Servers\DingoStore;
 
 class RpccallManager implements FactoryContract
 {
@@ -151,7 +152,7 @@ class RpccallManager implements FactoryContract
     }
 
     /**
-     * Create an instance of the Redis rpcclient driver.
+     * Create an instance of the Teegon rpcclient driver.
      *
      * @param  array  $config
      * @return teegonstore objecjt instance
@@ -159,6 +160,17 @@ class RpccallManager implements FactoryContract
     protected function createTeegonDriver(array $config, array $defaultHeader)
     {
         return new TeegonStore($config, $defaultHeader);
+    }
+
+    /**
+     * Create an instance of the internal dingoapi rpcclient driver.
+     *
+     * @param  array  $config
+     * @return teegonstore objecjt instance
+     */
+    protected function createDingoDriver(array $config, array $defaultHeader)
+    {
+        return new DingoStore($config, $defaultHeader);
     }
 
     /**

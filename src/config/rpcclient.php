@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('RPCCALL_DRIVER', 'teegon'),
+    'default' => env('RPCCALL_DRIVER', 'dingo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -35,6 +35,9 @@ return [
             // 'url' => 'http://127.0.0.1/espier/public/index.php/api',
             'key' => env('TEEGON_KEY', '47b7QcS'),
             'secret' => env('TEEGON_SECRET', 'ZmXxR5PXXEz8mjCwary4'),
+        ],
+        'dingo' => [
+            'driver' => 'dingo',
         ],
     ],
 
