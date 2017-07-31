@@ -82,7 +82,7 @@ class TeegonStore implements Repository
 
         // 发起请求
         // 天工访问目前不支持restapi的方式，所以这里做个判断
-        $restapi = $this->config['is_local'] ? true : false;
+        $restapi = (isset($this->config['is_local']) && $this->config['is_local']) ? true : false;
         $client = new TeegonClient($url, $key, $secret, $restapi);
         return $client->$verb($uri, $parameters, $headers);
     }
