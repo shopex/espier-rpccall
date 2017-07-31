@@ -31,27 +31,27 @@ class DingoStore implements Repository
 
     public function get($uri, array $parameters = [], array $headers = [])
     {
-        return $this->api->get($uri, $parameters);
+        return $this->api->raw()->get($uri, $parameters)->content();
     }
 
     public function post($uri, array $parameters = [], array $headers = [])
     {
-        return $this->api->post($uri, $parameters);
+        return $this->api->raw()->post($uri, $parameters)->content();
     }
 
     public function put($uri, array $parameters = [], array $headers = [])
     {
-        return $this->api->put($uri, $parameters);
+        return $this->api->raw()->put($uri, $parameters)->content();
     }
 
     public function delete($uri, array $parameters = [], array $headers = [])
     {
-        return $this->api->delete($uri, $parameters);
+        return $this->api->raw()->delete($uri, $parameters)->content();
     }
 
     public function patch($uri, array $parameters = [], array $headers = [])
     {
-        return $this->api->patch($uri, $parameters);
+        return $this->api->raw()->patch($uri, $parameters)->content();
     }
 
 }
